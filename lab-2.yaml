@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-server
+  labels:
+    role: server
+spec:
+  containers:
+    - name: mysql-server
+      image: mysql/mysql-server:latest
+      env:
+      - name: PASSWORD
+        value: ###
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "100m"
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-client
+  labels:
+    role: client
+spec:
+  containers:
+    - name: mysql-client
+      image: mysql/mysql-server:latest
+      env:
+      - name: PASSWORD
+        value: ###
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+      lifecycle:
+        postStart:
+          exec: ###
+---
+  apiVersion: v1
+  data:
+    password: cXdlcnR5
+    username: cm9vdA==
+  kind: Secret
+  metadata:
+    creationTimestamp: 2018-07-09T16:52:54Z
+    name: db-user-pass
+    namespace: default
+    resourceVersion: "94584"
+    selfLink: /api/v1/namespaces/default/secrets/db-user-pass
+    uid: 8666c5b1-8398-11e8-8cdd-00155d380103
+  type: Opaque
