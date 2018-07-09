@@ -3,7 +3,7 @@ kind: Pod
 metadata:
   name: nginx-1
   labels:
-    run: web-1
+    app: web-1
 spec:
   containers:
     - name: nginx
@@ -27,7 +27,7 @@ kind: Pod
 metadata:
   name: nginx-2
   labels:
-    run: web-2
+    app: web-2
 spec:
   containers:
     - name: nginx
@@ -57,6 +57,7 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8081
+      name: http
 ---
 apiVersion: v1
 kind: Service
