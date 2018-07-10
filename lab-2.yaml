@@ -9,7 +9,7 @@ spec:
     - name: mysql-server
       image: mysql/mysql-server:latest
       env:
-      - name: PASSWORD
+      - name: MYSQL_ROOT_PASSWORD
         valueFrom:
           secretKeyRef:
             name: mysql-password
@@ -35,14 +35,14 @@ spec:
           secretKeyRef:
             name: mysql-password
             key: password
-        resources:
-          requests:
+      resources:
+        requests:
           memory: "64Mi"
           cpu: "50m"
       lifecycle:
-        postStart:
+         postStart:
           exec:
-            command: ["/bin/sh", "-c", "yum update; yum -y install git"]
+            command: ["/bin/sh", "-c", "yum -y update; yum -y install git"]
 ---
 kind: Service
 apiVersion: v1
