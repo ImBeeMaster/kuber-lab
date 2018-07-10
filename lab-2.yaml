@@ -10,7 +10,10 @@ spec:
       image: mysql/mysql-server:latest
       env:
       - name: PASSWORD
-        value: ###
+        valueFrom:
+          secretKeyRef:
+            name: mysql-password
+            key: password
       resources:
         requests:
           memory: "256Mi"
@@ -30,7 +33,7 @@ spec:
       - name: PASSWORD
         valueFrom:
           secretKeyRef:
-            name: db-user-pass
+            name: mysql-password
             key: password
       resources:
         requests:
@@ -46,5 +49,5 @@ data:
    username: cm9vdA==
 kind: Secret
 metadata:
-  name: db-user-pass  
+  name: mysql-password  
 type: Opaque
