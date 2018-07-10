@@ -35,8 +35,8 @@ spec:
           secretKeyRef:
             name: mysql-password
             key: password
-      resources:
-        requests:
+        resources:
+          requests:
           memory: "64Mi"
           cpu: "50m"
       lifecycle:
