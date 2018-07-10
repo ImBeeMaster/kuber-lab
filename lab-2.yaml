@@ -39,9 +39,20 @@ spec:
         requests:
           memory: "64Mi"
           cpu: "50m"
-     # lifecycle:
-     #   postStart:
-     #     exec: ###
+      # lifecycle:
+      #   postStart:
+      #     exec:
+      #       command: ["/bin/sh", "-c", "yum update;","/bin/sh", "yum -y install git"]
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql
+spec:
+  selector:
+    role: server
+  ports:
+  - port: 3306
 ---
 apiVersion: v1
 data:
