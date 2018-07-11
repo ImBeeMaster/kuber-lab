@@ -28,7 +28,7 @@ metadata:
 spec:
   containers:
     - name: mysql-client
-      image: mysql
+      image: beekeeper1611/mysql-client:latest
       env:
       - name: PASSWORD
         valueFrom:
@@ -44,10 +44,10 @@ spec:
       #   requests:
       #     memory: "64Mi"
       #     cpu: "50m"
-      lifecycle:
-         postStart:
-          exec:
-            command: ["/bin/sh", "-c", "apt-get -y update; apt-get -y install git"]
+      # lifecycle:
+      #    postStart:
+      #     exec:
+      #       command: ["/bin/sh", "-c", "apt-get -y update; apt-get -y install git"]
 ---
 kind: Service
 apiVersion: v1
