@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: mysql-server
-      image: mysql/mysql-server:latest
+      image: mysql
       env:
       - name: MYSQL_ROOT_PASSWORD
         valueFrom:
@@ -28,21 +28,26 @@ metadata:
 spec:
   containers:
     - name: mysql-client
-      image: mysql/mysql-server:latest
+      image: mysql
       env:
       - name: PASSWORD
         valueFrom:
           secretKeyRef:
             name: mysql-password
             key: password
-      resources:
-        requests:
-          memory: "64Mi"
-          cpu: "50m"
+      - name: MYSQL_ROOT_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: mysql-password
+            key: password
+      # resources:
+      #   requests:
+      #     memory: "64Mi"
+      #     cpu: "50m"
       lifecycle:
          postStart:
           exec:
-            command: ["/bin/sh", "-c", "yum -y update; yum -y install git"]
+            command: ["/bin/sh", "-c", "apt-get -y update; apt-get -y install git"]
 ---
 kind: Service
 apiVersion: v1
