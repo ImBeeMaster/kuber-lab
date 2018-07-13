@@ -7,11 +7,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
+<<<<<<< HEAD
       application: www
   template:
     metadata:
       labels:
         application: www
+=======
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+>>>>>>> 10e3b8c205860211d5a5fa4406d8981a3919006c
     spec:
       containers:
       - name: nginx
@@ -19,6 +27,7 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
+<<<<<<< HEAD
           - name: www-vol
             mountPath: /usr/share/nginx/html
       volumes:
@@ -32,6 +41,10 @@ spec:
         - name: www-vol
           mountPath: "/usr/share/nginx/html"
         command: ['sh', '-c', 'curl http://www.linux.org.ru > /usr/share/nginx/html/index.html']
+=======
+          - name: www
+            mountPath: /usr/share/nginx/html
+>>>>>>> 10e3b8c205860211d5a5fa4406d8981a3919006c
 ---
 kind: Service
 apiVersion: v1
@@ -39,7 +52,11 @@ metadata:
   name: web
 spec:
   selector:
+<<<<<<< HEAD
     application: www
+=======
+    app: nginx
+>>>>>>> 10e3b8c205860211d5a5fa4406d8981a3919006c
   ports:
   - port: 80
 ---
@@ -52,6 +69,7 @@ spec:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
+<<<<<<< HEAD
     requests:
       storage: 100Mi
   
@@ -65,3 +83,17 @@ spec:
 #     - ReadWriteOnce
 #   capacity:
 #     storage: 512Mi
+=======
+    storage: 512Mb
+  
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 512Mb
+>>>>>>> 10e3b8c205860211d5a5fa4406d8981a3919006c
