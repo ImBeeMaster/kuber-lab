@@ -1,0 +1,55 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: butuzov/nginx:latest
+        ports:
+        - containerPort: 80
+        volumeMounts:
+          - name: www
+            mountPath: /usr/share/nginx/html
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: web
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    storage: 512Mb
+  
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv01
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 512Mb
