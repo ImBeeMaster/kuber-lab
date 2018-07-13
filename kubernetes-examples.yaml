@@ -43,3 +43,47 @@ spec:
     gcePersistentDisk:
       pdName: mysite-volume-1
       fsType: ext4
+---
+# Claims As Volumes
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mypod
+  labels:
+    example: "3"
+spec:
+  containers:
+    - name: myfrontend
+      image: dockerfile/nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: myclaim
+  labels:
+    example: "3"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    storage: 512Mb
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv01
+  labels:
+    example: "3"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 512Mb

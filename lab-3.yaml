@@ -19,7 +19,7 @@ spec:
         ports:
         - containerPort: 80
         volumeMounts:
-          - name: www
+          - name: www-vol
             mountPath: /var/www/html   #/usr/share/nginx/html
       volumes:
         - name: www-vol
